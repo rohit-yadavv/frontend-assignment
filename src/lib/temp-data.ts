@@ -1,3 +1,5 @@
+import { Metric } from "@/app/_components/custom-metrics";
+
 export interface StockData {
   stock_symbol: string;
   company_name: string;
@@ -137,3 +139,15 @@ export const mockStockData: StockData = {
     },
   ],
 };
+
+
+export const defaultMetrics: Metric[] = [
+  { id: 1, name: "Value Stocks", pe: 15.5, peg: 1.2, rsi: 45 },
+  { id: 2, name: "Growth Tech", pe: 35.2, peg: 1.8, rsi: 65 },
+  { id: 3, name: "Dividend Aristocrats", pe: 20.1, peg: 2.1, rsi: 50 },
+  { id: 4, name: "Small Cap Gems", pe: 25.0, peg: 1.5, rsi: 60 },
+  { id: 5, name: "Blue Chip Giants", pe: 18.8, peg: 2.0, rsi: 48 },
+  { id: 6, name: "Emerging Markets", pe: 12.3, peg: 0.9, rsi: 55 },
+  { id: 7, name: "Cyclical Industries", pe: 10.5, peg: 1.1, rsi: 40 },
+  { id: 8, name: "Defensive Plays", pe: 22.6, peg: 2.5, rsi: 52 },
+];

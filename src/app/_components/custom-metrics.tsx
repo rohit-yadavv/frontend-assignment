@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback, memo } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -36,9 +35,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { PlusCircle, Trash2, BarChartHorizontalBig } from "lucide-react";
 import {
   Empty,
   EmptyContent,
@@ -47,8 +43,13 @@ import {
   EmptyHeader,
   EmptyMedia,
 } from "@/components/ui/empty";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { PlusCircle, Trash2, BarChartHorizontalBig } from "lucide-react";
+import { defaultMetrics } from "@/lib/temp-data";
 
-interface Metric {
+export interface Metric {
   id: number;
   name: string;
   pe: number;
@@ -87,7 +88,6 @@ const MetricRow = memo(function MetricRow({
 
 export default function CustomMetrics() {
   const [metrics, setMetrics] = useState<Metric[]>([]);
-
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [newMetricName, setNewMetricName] = useState("");
   const [nameError, setNameError] = useState<string | null>(null);
@@ -96,9 +96,9 @@ export default function CustomMetrics() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      setMetrics(stored ? JSON.parse(stored) : []);
+      setMetrics(stored ? JSON.parse(stored) : defaultMetrics);
     } catch {
-      setMetrics([]);
+      setMetrics(defaultMetrics);
     }
   }, []);
 
@@ -181,7 +181,7 @@ export default function CustomMetrics() {
             <Empty>
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <BarChartHorizontalBig className="h-12 w-12 text-muted-foreground" />
+                  <BarChartHorizontalBig className="h-12 w-12 text-[var(--muted-foreground)]" />
                 </EmptyMedia>
                 <EmptyTitle>No Metrics Yet</EmptyTitle>
                 <EmptyDescription>
@@ -194,7 +194,7 @@ export default function CustomMetrics() {
                   onClick={() => setIsAddDialogOpen(true)}
                   className="shrink-0 px-6"
                 >
-                  <PlusCircle className="mr-2 h-4 w-4 " />
+                  <PlusCircle className="mr-2 h-4 w-4" />
                   Add Metric
                 </Button>
               </EmptyContent>
@@ -239,7 +239,7 @@ export default function CustomMetrics() {
 
       <AlertDialog
         open={metricToRemove !== null}
-        onOpenChange={() => setMetricToRemove(null)}
+        onOpenChange={(isOpen) => !isOpen && setMetricToRemove(null)}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
