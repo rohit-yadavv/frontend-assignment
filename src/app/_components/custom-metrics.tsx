@@ -120,6 +120,7 @@ export default function CustomMetrics() {
     };
     setMetrics((prev) => [...prev, newMetric]);
     setIsAddDialogOpen(false);
+    setNewMetricName("");
   }, [newMetricName]);
 
   const handleDialogClose = (isOpen: boolean) => {
