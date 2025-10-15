@@ -46,6 +46,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { PlusCircle, Trash2, BarChartHorizontalBig } from "lucide-react";
 import { defaultMetrics } from "@/lib/temp-data";
 
@@ -86,8 +87,46 @@ const MetricRow = memo(function MetricRow({
   );
 });
 
+const MetricsTableSkeleton = () => (
+  <div className="rounded-md border">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>P/E Ratio</TableHead>
+          <TableHead>PEG Ratio</TableHead>
+          <TableHead>RSI</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-5 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-5 w-12" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-5 w-12" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-5 w-12" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-8" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </div>
+);
+
 export default function CustomMetrics() {
   const [metrics, setMetrics] = useState<Metric[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [newMetricName, setNewMetricName] = useState("");
   const [nameError, setNameError] = useState<string | null>(null);
@@ -99,12 +138,16 @@ export default function CustomMetrics() {
       setMetrics(stored ? JSON.parse(stored) : defaultMetrics);
     } catch {
       setMetrics(defaultMetrics);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(metrics));
-  }, [metrics]);
+    if (!isLoading) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(metrics));
+    }
+  }, [metrics, isLoading]);
 
   const handleAddMetric = useCallback(() => {
     if (!newMetricName.trim()) {
@@ -154,7 +197,9 @@ export default function CustomMetrics() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          {metrics.length > 0 ? (
+          {isLoading ? (
+            <MetricsTableSkeleton />
+          ) : metrics.length > 0 ? (
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
