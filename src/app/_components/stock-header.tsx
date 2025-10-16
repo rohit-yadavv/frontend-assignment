@@ -54,13 +54,20 @@ export const StockHeader = ({ data }: StockHeaderProps) => {
             width={100}
             height={100}
             alt="logo"
-            className="pl-6 h-6! w-20"
+            className="pl-6 h-6! w-20 max-sm:hidden"
           />
 
-          <CardHeader className="w-full pl-2">
+          <CardHeader className="w-full pl-2 max-sm:flex flex-col">
+            <Image
+              src={"/adani-logo.webp"}
+              width={100}
+              height={100}
+              alt="logo"
+              className="h-6! w-20 sm:hidden"
+            />
             <CardTitle>{data.company_name}</CardTitle>
             <CardDescription>{data.stock_symbol}</CardDescription>
-            <CardAction className="flex gap-2">
+            <CardAction className="flex gap-2 max-sm:pt-2">
               <Button variant="outline" size="sm" aria-label="Notifications">
                 <Bell className="h-4 w-4" />
               </Button>
@@ -291,29 +298,31 @@ export const StockHeader = ({ data }: StockHeaderProps) => {
             </Typography>
           </div>
 
-          <div className="flex gap-2 items-center w-full pt-2">
+          <div className="flex gap-2 items-center w-full pt-2 flex-wrap">
             <Button variant="outline" className="flex-1">
               Add to Basket
             </Button>
-            <ButtonGroup>
-              <Button className="bg-success hover:bg-success/90">Buy</Button>
-              <ButtonGroupSeparator />
-              <Button className="bg-success hover:bg-success/90">
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button className="bg-destructive hover:bg-destructive/90">
-                Sell
-              </Button>
-              <ButtonGroupSeparator />
-              <Button
-                size="icon"
-                className="bg-destructive hover:bg-destructive/90"
-              >
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </ButtonGroup>{" "}
+            <div className="flex flex-1 gap-2 items-center justify-center">
+              <ButtonGroup>
+                <Button className="bg-success hover:bg-success/90">Buy</Button>
+                <ButtonGroupSeparator />
+                <Button className="bg-success hover:bg-success/90">
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </ButtonGroup>
+              <ButtonGroup>
+                <Button className="bg-destructive hover:bg-destructive/90">
+                  Sell
+                </Button>
+                <ButtonGroupSeparator />
+                <Button
+                  size="icon"
+                  className="bg-destructive hover:bg-destructive/90"
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </ButtonGroup>
+            </div>
           </div>
         </CardContent>
       </Card>
