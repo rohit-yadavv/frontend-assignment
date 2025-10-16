@@ -183,9 +183,9 @@ export default function CustomMetrics() {
   return (
     <>
       <Card>
-        <CardHeader>
+        <CardHeader className="max-sm:flex items-center justify-between">
           <CardTitle>Custom Metrics</CardTitle>
-          <CardDescription>Manage your saved stock metrics.</CardDescription>
+          <CardDescription className="max-sm:hidden">Manage your saved stock metrics.</CardDescription>
           <CardAction>
             <Button
               onClick={() => setIsAddDialogOpen(true)}
